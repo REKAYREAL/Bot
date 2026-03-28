@@ -2,7 +2,7 @@ const { spawnSync, spawn } = require('child_process')
 const { existsSync, writeFileSync } = require('fs')
 const path = require('path')
 
-const SESSION_ID = process.env.SESSION_ID || 'levanter_281182f3f1ab034e7e81723bc427638639' // use env var or fallback
+const SESSION_ID = process.env.SESSION_ID || 'levanter_28896e4784fd2c4110a28d08f1e3c6957c' // use env var or fallback
 
 let nodeRestartCount = 0
 const maxNodeRestarts = 5
