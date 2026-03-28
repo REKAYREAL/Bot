@@ -1,17 +1,13 @@
-# Dockerfile
-FROM node:18-alpine
+FROM node:20-alpine
 
 # Install git and yarn
 RUN apk add --no-cache git yarn
 
-# Set the working directory inside the container
+# Set working directory
 WORKDIR /app
 
-# Copy only the entry point first (for caching)
+# Copy only the entry point (the rest will be cloned at runtime)
 COPY index.js ./
-
-# The script will clone the repository into /app/levanter
-# and install dependencies at startup
 
 # Start the bot
 CMD ["node", "index.js"]
