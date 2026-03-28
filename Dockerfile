@@ -1,9 +1,13 @@
-FROM quay.io/lyfe00011/md:beta
+FROM node:20-alpine
 
-# Install procps to provide 'ps' command
-RUN apt-get update && apt-get install -y procps && rm -rf /var/lib/apt/lists/*
+# Install git and yarn
+RUN apk add --no-cache git yarn
 
-RUN git clone https://github.com/lyfe00011/levanter.git /root/LyFE/
-WORKDIR /root/LyFE/
-RUN yarn install
-CMD ["npm", "start"]
+# Set working directory
+WORKDIR /app
+
+# Copy only the entry point (the rest will be cloned at runtime)
+COPY index.js ./
+
+# Start the bot
+CMD ["node", "index.js"]
