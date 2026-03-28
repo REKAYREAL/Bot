@@ -1,0 +1,24 @@
+# fly.toml
+app = "levanter-bot"                # change to a unique name
+primary_region = "fra"              # pick a region close to you (fra, lax, ord, etc.)
+
+[build]
+  dockerfile = "Dockerfile"         # use the custom Dockerfile we'll create
+
+[[services]]
+  internal_port = 3000              # required but not used
+  protocol = "tcp"
+  [services.concurrency]
+    type = "connections"
+    hard_limit = 25
+    soft_limit = 20
+
+  [[services.ports]]
+    handlers = []
+    port = 80
+    force_https = true
+
+# Persistent storage for the 'levanter' folder (cloned repo + session data)
+[mounts]
+  source = "levanter_data"          # volume name – will be created later
+  destination = "/levanter"         # where the folder is mounted inside the container
