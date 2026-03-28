@@ -1,15 +1,9 @@
-FROM quay.io/lyfe00011/md:beta AS builder
-
-WORKDIR /app
-COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile
-
 FROM quay.io/lyfe00011/md:beta
-WORKDIR /app
-COPY --from=builder /app/node_modules ./node_modules
-COPY . .
 
-# Switch to a non-root user (if the base image defines one)
-USER node
+# Install procps to provide 'ps' command
+RUN apt-get update && apt-get install -y procps && rm -rf /var/lib/apt/lists/*
 
-CMD ["yarn", "start"]
+RUN git clone https://github.com/lyfe00011/levanter.git /root/LyFE/
+WORKDIR /root/LyFE/
+RUN yarn install
+CMD ["npm", "start"]
