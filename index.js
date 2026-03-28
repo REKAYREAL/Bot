@@ -2,7 +2,7 @@ const { spawnSync, spawn } = require('child_process')
 const { existsSync, writeFileSync } = require('fs')
 const path = require('path')
 
-const SESSION_ID = 'levanter_281182f3f1ab034e7e81723bc427638639' // Edit this line only, don't remove ' <- this symbol
+const SESSION_ID = process.env.SESSION_ID || 'levanter_281182f3f1ab034e7e81723bc427638639' // use env var or fallback
 
 let nodeRestartCount = 0
 const maxNodeRestarts = 5
@@ -156,3 +156,13 @@ if (!existsSync('levanter')) {
 }
 
 startNode()
+
+// ========== ADD THIS HTTP SERVER AT THE VERY END ==========
+const http = require('http')
+const server = http.createServer((req, res) => {
+  res.end('Bot is running')
+})
+const port = process.env.PORT || 3000
+server.listen(port, () => {
+  console.log(`Health check server listening on port ${port}`)
+})
